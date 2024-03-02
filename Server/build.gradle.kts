@@ -1,15 +1,18 @@
 plugins {
     id("java")
+    id("com.github.johnrengelman.shadow") version "7.1.2"
     id("io.papermc.paperweight.userdev") version "1.5.10" // Check for new versions at https://plugins.gradle.org/plugin/io.papermc.paperweight.userdev
     id("xyz.jpenilla.run-paper") version "2.2.3" // Adds runServer and runMojangMappedServer tasks for testing
+    id("maven-publish")
 }
 
 group = "com.readutf.mcmatchmaker"
 version = "1.0-SNAPSHOT"
-description =  "Server Jar for matchmaking instance"
+description = "Server Jar for matchmaking instance"
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
@@ -17,6 +20,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
 
     paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
+    implementation("com.readutf.matchmaker:client:50")
+    compileOnly("com.readutf.inari:development:1.0")
 }
 
 tasks.test {

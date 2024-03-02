@@ -1,8 +1,10 @@
 name: $name
 version: $version
-main: io.papermc.paperweight.testplugin.TestPlugin
+main: com.readutf.mcmatchmaker.server.MatchInstanceSpigot
 description: $description
-load: STARTUP
+load: POSTWORLD
 authors:
   - readUTF
+depend:
+  - InariDemo
 api-version: "$apiVersion"
