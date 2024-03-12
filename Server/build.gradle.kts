@@ -22,7 +22,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
-    implementation("com.readutf.matchmaker:client:50")
+    implementation("com.readutf.matchmaker:client:+")
     compileOnly("com.readutf.inari:development:1.0")
 }
 
