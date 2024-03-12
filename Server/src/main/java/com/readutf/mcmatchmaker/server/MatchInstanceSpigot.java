@@ -37,23 +37,25 @@ public class MatchInstanceSpigot extends JavaPlugin {
 
         }, matchRequest -> {
 
-            String queueId = matchRequest.getQueueId();
-            GameStarter starter = inari.getGameStarterManager().getStarter(queueId);
-
-            if(starter == null) {
-                return MatchResponse.failure(matchRequest.getRequestId(), "Invalid queue id.");
-            }
-
-            if(matchRequest.getTeams().size() != 2) {
-                return MatchResponse.failure(matchRequest.getRequestId(), "Invalid number of teams.");
-            }
-
-            List<Team> teams = List.of(
-                    new Team("Team 1", ChatColor.RED, matchRequest.getTeams().get(0)),
-                    new Team("Team 2", ChatColor.BLUE, matchRequest.getTeams().get(1))
-            );
+            System.out.println("Received match request: " + matchRequest.getRequestId() + " for queue " + matchRequest.getQueueId() + " with teams " + matchRequest.getTeams());
 
             try {
+                String queueId = matchRequest.getQueueId();
+                GameStarter starter = inari.getGameStarterManager().getStarter(queueId);
+
+                if (starter == null) {
+                    return MatchResponse.failure(matchRequest.getRequestId(), "Invalid queue id.");
+                }
+
+                if (matchRequest.getTeams().size() != 2) {
+                    return MatchResponse.failure(matchRequest.getRequestId(), "Invalid number of teams.");
+                }
+
+                List<Team> teams = List.of(
+                        new Team("Team 1", ChatColor.RED, matchRequest.getTeams().get(0)),
+                        new Team("Team 2", ChatColor.BLUE, matchRequest.getTeams().get(1))
+                );
+
                 Game game = starter.startGame(teams);
                 return MatchResponse.success(matchRequest.getRequestId(), game.getGameId());
             } catch (Exception e) {
