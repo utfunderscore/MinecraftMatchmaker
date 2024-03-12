@@ -19,6 +19,8 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
     paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
     implementation("com.readutf.matchmaker:client:50")
     compileOnly("com.readutf.inari:development:1.0")
@@ -27,7 +29,6 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
-
 tasks {
     // Configure reobfJar to run when invoking the build task
     assemble {
@@ -56,6 +57,13 @@ tasks {
         filesMatching("plugin.yml") {
             expand(props)
         }
+    }
+    runServer {
+        // Configure the Minecraft version for our task.
+        // This is the only required configuration besides applying the plugin.
+        // Your plugin's jar (or shadowJar if present) will be used automatically.
+        minecraftVersion("1.20.2")
+
     }
 
     /*

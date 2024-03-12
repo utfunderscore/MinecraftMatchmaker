@@ -15,5 +15,6 @@ gradle-app.setting
 
 .idea/*
 
-Server/build/*
-Server/run/*
+
+*/run/*
+*/build/*

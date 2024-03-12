@@ -1,6 +1,5 @@
 package com.readutf.mcmatchmaker.server;
 
-import com.readutf.inari.core.InariCore;
 import com.readutf.inari.core.game.Game;
 import com.readutf.inari.core.game.team.Team;
 import com.readutf.inari.test.InariDemo;
@@ -11,13 +10,12 @@ import com.readutf.matchmaker.shared.match.MatchResponse;
 import com.readutf.matchmaker.shared.server.Server;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.swing.plaf.nimbus.State;
-import java.awt.*;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class MatchInstanceSpigot extends JavaPlugin {
 
