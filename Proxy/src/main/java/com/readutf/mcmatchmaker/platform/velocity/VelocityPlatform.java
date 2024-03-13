@@ -4,6 +4,7 @@ import co.aikar.commands.CommandIssuer;
 import co.aikar.commands.VelocityCommandIssuer;
 import com.readutf.matchmaker.shared.server.Server;
 import com.readutf.mcmatchmaker.platform.PlatformWrapper;
+import com.readutf.mcmatchmaker.utils.ColorUtils;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import com.velocitypowered.api.proxy.server.ServerInfo;
@@ -51,5 +52,19 @@ public class VelocityPlatform implements PlatformWrapper {
     public void messagePlayer(UUID playerId, TextComponent message) {
 
            proxyServer.getPlayer(playerId).ifPresent(player -> player.sendMessage(message));
+    }
+
+    @Override
+    public boolean isPlayerOnline(UUID playerId) {
+        return proxyServer.getPlayer(playerId).isPresent();
+    }
+
+    @Override
+    public void sendToServer(UUID player, UUID gameServerId) {
+        proxyServer.getPlayer(player).ifPresent(player1 -> {
+            Optional<RegisteredServer> server = proxyServer.getServer(gameServerId.toString());
+            server.ifPresent(registeredServer -> player1.createConnectionRequest(registeredServer).connect());
+            player1.sendMessage(ColorUtils.color("&aYou are being sent to cluster-" + gameServerId.toString().substring(0, 8)));
+        });
     }
 }

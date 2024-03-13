@@ -30,12 +30,14 @@ public class MatchInstanceSpigot extends JavaPlugin {
 
             Collection<Game> games = inari.getGameManager().getGames();
             return new Server(
-                    serverId, Bukkit.getServer().getIp(), Bukkit.getServer().getPort(), "test",
+                    serverId, Bukkit.getServer().getIp(), Bukkit.getServer().getPort(), "minigame",
                     games.stream().map(game -> new MatchData(game.getGameId(), game.getAllPlayers().size(), "")).toList(),
                     new HashMap<>(), System.currentTimeMillis(), games.size(), 20
             );
 
         }, matchRequest -> {
+
+            long start = System.currentTimeMillis();
 
             System.out.println("Received match request: " + matchRequest.getRequestId() + " for queue " + matchRequest.getQueueId() + " with teams " + matchRequest.getTeams());
 
@@ -57,6 +59,9 @@ public class MatchInstanceSpigot extends JavaPlugin {
                 );
 
                 Game game = starter.startGame(teams);
+
+                System.out.println("Match started in " + (System.currentTimeMillis() - start) + "ms");
+
                 return MatchResponse.success(matchRequest.getRequestId(), game.getGameId());
             } catch (Exception e) {
                 return MatchResponse.failure(matchRequest.getRequestId(), e.getMessage());
