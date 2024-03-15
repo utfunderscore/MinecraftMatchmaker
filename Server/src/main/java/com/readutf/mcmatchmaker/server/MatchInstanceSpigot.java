@@ -58,7 +58,7 @@ public class MatchInstanceSpigot extends JavaPlugin {
                         new Team("Team 2", ChatColor.BLUE, matchRequest.getTeams().get(1))
                 );
 
-                Game game = starter.startGame(teams);
+                Game game = starter.startGame(teams).join();
 
                 System.out.println("Match started in " + (System.currentTimeMillis() - start) + "ms");
 
