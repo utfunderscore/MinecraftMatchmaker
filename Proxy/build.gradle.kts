@@ -12,16 +12,17 @@ repositories {
     mavenLocal()
 
     maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
-    maven { url = uri ("https://oss.sonatype.org/content/repositories/snapshots") } // This lets gradle find the BungeeCord files online
+    maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") } // This lets gradle find the BungeeCord files online
+    maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 
-    implementation("com.readutf.matchmaker:api-wrapper:+")
+    implementation("com.github.readutf.MatchMaker:api-wrapper:+")
 
-    implementation( "co.aikar:acf-velocity:0.5.1-SNAPSHOT")
+    implementation("co.aikar:acf-velocity:0.5.1-SNAPSHOT")
 
     //add velocity
     compileOnly("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
