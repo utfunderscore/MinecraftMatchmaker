@@ -39,6 +39,7 @@ public class MatchInstanceSpigot extends JavaPlugin {
 
             long start = System.currentTimeMillis();
 
+            
             System.out.println("Received match request: " + matchRequest.getRequestId() + " for queue " + matchRequest.getQueueId() + " with teams " + matchRequest.getTeams());
 
             try {
