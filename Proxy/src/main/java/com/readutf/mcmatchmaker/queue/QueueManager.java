@@ -35,7 +35,7 @@ public class QueueManager {
         ApiResponse<List<Queue>> remoteQueues = RetrofitHelper.getOrDefault(queueServices.getQueueList(), ApiResponse.error(""));
         if (remoteQueues.isSuccess()) {
             for (Queue queue : remoteQueues.getData()) {
-                queues.put(queue.getName(), queue);
+                queues.put(queue.getId(), queue);
             }
         }
 
@@ -90,7 +90,7 @@ public class QueueManager {
     }
 
     public void updateQueue(Queue queue) {
-        queues.put(queue.getName(), queue);
+        queues.put(queue.getId(), queue);
     }
 
     public void handleError(String queueId, String error) {
@@ -112,16 +112,16 @@ public class QueueManager {
     }
 
     public void handlePlayerEvent(QueuePlayerEvent queuePlayerEvent) {
-        Queue queue = queues.get(queuePlayerEvent.getQueue().getName());
+        Queue queue = queues.get(queuePlayerEvent.getQueue().getId());
         if (queue == null) return;
 
         if (queuePlayerEvent.isJoining()) {
             for (UUID player : queuePlayerEvent.getPlayerIds()) {
-                platformWrapper.messagePlayer(player, ColorUtils.color("&aYou have joined the queue '" + queue.getName() + "'"));
+                platformWrapper.messagePlayer(player, ColorUtils.color("&aYou have joined the queue '" + queue.getDisplayName() + "'"));
             }
         } else {
             for (UUID player : queuePlayerEvent.getPlayerIds()) {
-                platformWrapper.messagePlayer(player, ColorUtils.color("&aYou have left the queue '" + queue.getName() + "'"));
+                platformWrapper.messagePlayer(player, ColorUtils.color("&aYou have left the queue '" + queue.getDisplayName() + "'"));
             }
         }
     }
