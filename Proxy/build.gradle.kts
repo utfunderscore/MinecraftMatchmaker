@@ -20,7 +20,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 
-    implementation ("com.github.utfunderscore.MatchMaker:ApiWrapper:latest")
+    implementation("com.readutf.matchmaker:api-wrapper:+")
 
     implementation("co.aikar:acf-velocity:0.5.1-SNAPSHOT")
 
@@ -36,6 +36,7 @@ dependencies {
 
     testCompileOnly("org.projectlombok:lombok:1.18.30")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.30")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
 }
 
