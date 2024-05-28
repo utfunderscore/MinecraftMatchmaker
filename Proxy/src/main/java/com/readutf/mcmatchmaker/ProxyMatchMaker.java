@@ -12,32 +12,53 @@ import com.readutf.mcmatchmaker.queue.QueueEventListener;
 import com.readutf.mcmatchmaker.queue.QueueManager;
 import com.readutf.mcmatchmaker.server.ServerChangeListener;
 import com.readutf.mcmatchmaker.server.ServerManager;
+import lombok.Getter;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.Arrays;
 import java.util.List;
 
+@Getter
 public class ProxyMatchMaker {
 
     private final Retrofit retrofit;
     private final PlatformWrapper platformWrapper;
-    private final ServerManager serverManager;
-    private final QueueManager queueManager;
-    private final ServerListener serverListener;
-    private final QueueListener queueListener;
+
+    private ServerManager serverManager;
+    private QueueManager queueManager;
+    private ServerListener serverListener;
+    private QueueListener queueListener;
+
+    private boolean available;
 
     public ProxyMatchMaker(PlatformWrapper platformWrapper) {
         this.platformWrapper = platformWrapper;
-        this.retrofit = new Retrofit.Builder().baseUrl("http://localhost:8080").addConverterFactory(GsonConverterFactory.create()).build();
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+
+        this.retrofit = new Retrofit.Builder().client(new OkHttpClient.Builder().addInterceptor(logging).build()).baseUrl("http://localhost:8410").addConverterFactory(GsonConverterFactory.create()).build();
+        sync();
+
+
+
+    }
+
+    public void sync() {
+
         this.serverManager = new ServerManager(retrofit, platformWrapper);
         this.queueManager = new QueueManager(serverManager, platformWrapper, QueueService.builder(retrofit));
-        this.serverListener = ServerListener.instance("ws://localhost:8080", List.of("*"), new ServerChangeListener(serverManager));
-        this.queueListener = QueueListener.instance("ws://localhost:8080", new QueueEventListener(queueManager));
 
+        this.serverListener = ServerListener.instance("ws://localhost:8410", List.of("*"), new ServerChangeListener(this));
+        this.queueListener = QueueListener.instance("ws://localhost:8410", new QueueEventListener(queueManager));
 
         serverListener.connect();
         queueListener.connect();
+
     }
 
     public void init(CommandManager commandManager) {

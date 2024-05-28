@@ -1,0 +1,7 @@
+docker-mode: false
+server-address:
+  address: "localhost"
+  port: 25565 # Overridden in docker mode.
+orchestrator:
+  host: localhost
+  port: 8080

@@ -42,7 +42,7 @@ public class QueueManager {
     }
 
     public void addToQueue(String queueId, UUID playerId) {
-        ApiResponse<Queue> joinQueue = RetrofitHelper.getOrDefault(queueService.joinQueue(queueId, playerId.toString()),
+        ApiResponse<Boolean> joinQueue = RetrofitHelper.getOrDefault(queueService.joinQueue(queueId, playerId.toString()),
                 ApiResponse.error("&cCould not contact queue server, please try again later"));
 
         if (!joinQueue.isSuccess()) {

@@ -12,7 +12,9 @@ repositories {
     mavenLocal()
 
     maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
-    maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") } // This lets gradle find the BungeeCord files online
+    maven {
+        url = uri("https://oss.sonatype.org/content/repositories/snapshots")
+    } // This lets gradle find the BungeeCord files online
     maven { url = uri("https://jitpack.io") }
 }
 
@@ -20,7 +22,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 
-    implementation("com.github.readutf.MatchMaker:api-wrapper:+")
+    implementation("com.github.utfunderscore.MatchMaker:api-wrapper:a17105dd5f")
 
     implementation("co.aikar:acf-velocity:0.5.1-SNAPSHOT")
 
@@ -36,6 +38,7 @@ dependencies {
 
     testCompileOnly("org.projectlombok:lombok:1.18.30")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.30")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
 }
 
