@@ -8,10 +8,13 @@ import com.readutf.matchmaker.client.ErosClient;
 import com.readutf.matchmaker.shared.match.MatchData;
 import com.readutf.matchmaker.shared.match.MatchResponse;
 import com.readutf.matchmaker.shared.server.Server;
+import com.readutf.mcmatchmaker.server.utils.DockerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -26,11 +29,13 @@ public class MatchInstanceSpigot extends JavaPlugin {
 
         InariDemo inari = InariDemo.getInstance();
 
-        new ErosClient(() -> {
+        saveDefaultConfig();
+
+        new ErosClient(getConfig().getString("orchestrator.host"), getConfig().getInt("orchestrator.port"), () -> {
 
             Collection<Game> games = inari.getGameManager().getGames();
             return new Server(
-                    serverId, Bukkit.getServer().getIp(), Bukkit.getServer().getPort(), "minigame",
+                    serverId, getServerAddress(), getServerPort(getConfig().getBoolean("docker-mode")), "minigame",
                     games.stream().map(game -> new MatchData(game.getGameId(), game.getAllPlayers().size(), "")).toList(),
                     new HashMap<>(), System.currentTimeMillis(), games.size(), 20
             );
@@ -72,5 +77,19 @@ public class MatchInstanceSpigot extends JavaPlugin {
         });
 
     }
+
+    private int getServerPort(boolean dockerMode) {
+        if(dockerMode) DockerUtils.getDockerPort();
+        return getConfig().getInt("orchestrator.port");
+    }
+
+    public String getServerAddress() {
+        try {
+            return InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            return "localhost";
+        }
+    }
+
 
 }

@@ -8,7 +8,7 @@ plugins {
 
 group = "com.readutf.mcmatchmaker"
 version = "1.0-SNAPSHOT"
-description = "Server Jar for matchmaking instance"
+description = "Matchmaking instance"
 
 repositories {
     mavenCentral()
@@ -22,8 +22,11 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
-    implementation("com.readutf.matchmaker:client:+")
+    implementation("com.readutf.matchmaker:client:1.3.1")
     compileOnly("com.readutf.inari:development:1.0")
+
+
+    implementation("com.github.docker-java:docker-java:3.2.13")
 }
 
 tasks.test {
@@ -58,6 +61,7 @@ tasks {
             expand(props)
         }
     }
+
     runServer {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.

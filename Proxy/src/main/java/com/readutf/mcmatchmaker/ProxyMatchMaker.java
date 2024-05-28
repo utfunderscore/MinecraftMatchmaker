@@ -41,7 +41,7 @@ public class ProxyMatchMaker {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
 
-        this.retrofit = new Retrofit.Builder().client(new OkHttpClient.Builder().addInterceptor(logging).build()).baseUrl("http://localhost:8080").addConverterFactory(GsonConverterFactory.create()).build();
+        this.retrofit = new Retrofit.Builder().client(new OkHttpClient.Builder().addInterceptor(logging).build()).baseUrl("http://localhost:8410").addConverterFactory(GsonConverterFactory.create()).build();
         sync();
 
 
@@ -53,8 +53,8 @@ public class ProxyMatchMaker {
         this.serverManager = new ServerManager(retrofit, platformWrapper);
         this.queueManager = new QueueManager(serverManager, platformWrapper, QueueService.builder(retrofit));
 
-        this.serverListener = ServerListener.instance("ws://localhost:8080", List.of("*"), new ServerChangeListener(this));
-        this.queueListener = QueueListener.instance("ws://localhost:8080", new QueueEventListener(queueManager));
+        this.serverListener = ServerListener.instance("ws://localhost:8410", List.of("*"), new ServerChangeListener(this));
+        this.queueListener = QueueListener.instance("ws://localhost:8410", new QueueEventListener(queueManager));
 
         serverListener.connect();
         queueListener.connect();
