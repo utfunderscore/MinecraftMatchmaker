@@ -9,7 +9,6 @@ import com.readutf.matchmaker.shared.match.MatchData;
 import com.readutf.matchmaker.shared.match.MatchResponse;
 import com.readutf.matchmaker.shared.server.Server;
 import com.readutf.mcmatchmaker.server.utils.DockerUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 

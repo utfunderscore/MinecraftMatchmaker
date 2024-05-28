@@ -10,9 +10,12 @@ group = "com.readutf.mcmatchmaker"
 version = "1.0-SNAPSHOT"
 description = "Matchmaking instance"
 
+
 repositories {
     mavenCentral()
     mavenLocal()
+
+    maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
@@ -22,12 +25,15 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
-    implementation("com.readutf.matchmaker:client:1.3.1")
+    implementation("com.github.utfunderscore.MatchMaker:client:a17105dd5f")
+    implementation("com.github.utfunderscore.MatchMaker:shared:a17105dd5f")
     compileOnly("com.readutf.inari:development:1.0")
 
 
     implementation("com.github.docker-java:docker-java:3.2.13")
 }
+
+
 
 tasks.test {
     useJUnitPlatform()
