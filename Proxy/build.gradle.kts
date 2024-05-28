@@ -11,6 +11,8 @@ repositories {
     mavenCentral()
     mavenLocal()
 
+    maven { url = uri("https://repo.aikar.co/content/groups/aikar/") }
+    maven { url = uri("https://hub.spigotmc.org/nexus/content/groups/public/") }
     maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
     maven {
         url = uri("https://oss.sonatype.org/content/repositories/snapshots")
