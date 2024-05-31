@@ -27,14 +27,18 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
-    implementation("com.github.utfunderscore.MatchMaker:client:a17105dd5f")
-    implementation("com.github.utfunderscore.MatchMaker:shared:a17105dd5f")
+
 
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
         compileOnly("com.readutf.inari:development:1.0")
+        implementation("com.readutf.matchmaker:client:1.3.1")
+        implementation("com.readutf.matchmaker:shared:1.3.1")
     } else {
         compileOnly("com.github.utfunderscore.MinigameFramework:development:31028f3ac6:dev")
         compileOnly("com.github.utfunderscore.MinigameFramework:core:31028f3ac6:dev")
+
+        implementation("com.github.utfunderscore.MatchMaker:client:master-SNAPSHOT")
+        implementation("com.github.utfunderscore.MatchMaker:shared:master-SNAPSHOT")
     }
 
 
