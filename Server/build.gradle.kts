@@ -1,3 +1,5 @@
+import org.codehaus.plexus.util.Os
+
 plugins {
     id("java")
     id("com.github.johnrengelman.shadow") version "7.1.2"
@@ -27,10 +29,28 @@ dependencies {
     paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
     implementation("com.github.utfunderscore.MatchMaker:client:a17105dd5f")
     implementation("com.github.utfunderscore.MatchMaker:shared:a17105dd5f")
-    compileOnly("com.readutf.inari:development:1.0")
+
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        compileOnly("com.readutf.inari:development:1.0")
+    } else {
+        compileOnly("com.github.utfunderscore.MinigameFramework:development:31028f3ac6:dev")
+        compileOnly("com.github.utfunderscore.MinigameFramework:core:31028f3ac6:dev")
+    }
 
 
     implementation("com.github.docker-java:docker-java:3.2.13")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "com.readutf.mcmatchmaker"
+            artifactId = "Server"
+            version = "1.1"
+
+            from(components["java"])
+        }
+    }
 }
 
 
@@ -38,14 +58,14 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
 tasks {
     // Configure reobfJar to run when invoking the build task
-    assemble {
-        dependsOn(reobfJar)
-    }
 
     compileJava {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
+
+
 
         // Set the release flag. This configures what version bytecode the compiler will emit, as well as what JDK APIs are usable.
         // See https://openjdk.java.net/jeps/247 for more information.

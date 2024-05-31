@@ -2,6 +2,7 @@ package com.readutf.mcmatchmaker.server;
 
 import com.readutf.inari.core.game.Game;
 import com.readutf.inari.core.game.team.Team;
+import com.readutf.inari.core.game.team.TeamColor;
 import com.readutf.inari.test.InariDemo;
 import com.readutf.inari.test.games.GameStarter;
 import com.readutf.matchmaker.client.ErosClient;
@@ -9,15 +10,11 @@ import com.readutf.matchmaker.shared.match.MatchData;
 import com.readutf.matchmaker.shared.match.MatchResponse;
 import com.readutf.matchmaker.shared.server.Server;
 import com.readutf.mcmatchmaker.server.utils.DockerUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class MatchInstanceSpigot extends JavaPlugin {
 
@@ -59,11 +56,11 @@ public class MatchInstanceSpigot extends JavaPlugin {
                 }
 
                 List<Team> teams = List.of(
-                        new Team("Team 1", ChatColor.RED, matchRequest.getTeams().get(0)),
-                        new Team("Team 2", ChatColor.BLUE, matchRequest.getTeams().get(1))
+                        new Team("Team 1", TeamColor.RED, matchRequest.getTeams().get(0)),
+                        new Team("Team 2", TeamColor.BLUE, matchRequest.getTeams().get(1))
                 );
 
-                Game game = starter.startGame(teams).join();
+                Game game = starter.startGame(matchRequest.getTeams()).join();
 
                 System.out.println("Match started in " + (System.currentTimeMillis() - start) + "ms");
 
